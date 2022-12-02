@@ -21,12 +21,14 @@ func main() {
 	}
 
 	for l := range c {
-		go checkLink(l, c)
+		go func() {
+			time.Sleep(time.Second * 5)
+			checkLink(l, c)
+		}()
 	}
 }
 
 func checkLink(link string, c chan string) {
-	time.Sleep(time.Second * 5)
 	_, err := http.Get(link)
 	if err != nil {
 		fmt.Println(link, "might be down")
